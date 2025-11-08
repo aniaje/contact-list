@@ -1,0 +1,16 @@
+# Dependencies
+node_modules
+
+# Production
+build
+dist
+
+# Misc
+.DS_Store
+coverage
+*.log
+
+# Config files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

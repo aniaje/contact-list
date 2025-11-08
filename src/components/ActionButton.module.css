@@ -1,0 +1,47 @@
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    min-width: 200px;
+    margin-bottom: 30px;
+}
+
+.button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.loadingContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.loadingContainer > :first-child {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.primary {
+    background-color: #2563eb;
+    color: white;
+}
+
+.primary:hover:not(:disabled) {
+    background-color: #1d4ed8;
+}
+
+.error {
+    background-color: #dc2626;
+    color: white;
+}
+
+.error:hover:not(:disabled) {
+    background-color: #b91c1c;
+}
