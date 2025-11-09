@@ -29,19 +29,19 @@
 }
 
 .primary {
-    background-color: #2563eb;
+    background-color: var(--color-primary);
     color: white;
 }
 
 .primary:hover:not(:disabled) {
-    background-color: #1d4ed8;
+    opacity: 0.9;
 }
 
 .error {
-    background-color: #dc2626;
+    background-color: var(--color-error);
     color: white;
 }
 
 .error:hover:not(:disabled) {
-    background-color: #b91c1c;
+    opacity: 0.9;
 }

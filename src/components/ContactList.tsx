@@ -1,12 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Layout from './Layout';
 import PersonInfo from './PersonInfo';
 import { ActionButton } from './ActionButton';
 import { Oval } from './Oval';
-import apiData from '../api';
-import { toggleSelection } from '../utils/selection';
-import { scrollToBottom } from '../utils/scroll';
+import { toggleSelection, scrollToBottom } from '../utils';
 import { Contact } from '../types';
+import apiData from '../api';
 import styles from './ContactList.module.css';
 
 function ContactList() {
@@ -43,7 +41,6 @@ function ContactList() {
 
     useEffect(() => {
         fetchContacts();
-        // Only run on mount
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -74,54 +71,57 @@ function ContactList() {
     }, [data, selected]);
 
     return (
-        <Layout header={`Selected contacts: ${selected.size}`}>
-            {loading && data.length === 0 ? (
-                <div className={styles.loadingContainer}>
-                    <Oval
-                        height={80}
-                        width={80}
-                        color="#007bff"
-                        secondaryColor="#ccc"
-                        strokeWidth={4}
-                        strokeWidthSecondary={4}
-                    />
-                </div>
-            ) : (
-                <div className={styles.list}>
-                    {sortedData.map(personInfo => (
-                        <PersonInfo
-                            key={personInfo.id}
-                            data={personInfo}
-                            isSelected={selected.has(personInfo.id)}
-                            onToggle={handleToggle}
+        <>
+            <header className={styles.header}>Selected contacts: {selected.size}</header>
+            <main className={styles.main}>
+                {loading && data.length === 0 ? (
+                    <div className={styles.loadingContainer}>
+                        <Oval
+                            height={80}
+                            width={80}
+                            color="var(--color-primary)"
+                            secondaryColor="var(--color-text-light)"
+                            strokeWidth={4}
+                            strokeWidthSecondary={4}
                         />
-                    ))}
-                </div>
-            )}
-            {data.length > 0 && hasNextPage && (
-                <div className={styles.buttonContainer}>
-                    {error && retryCount >= 3 ? (
-                        <ActionButton
-                            variant="error"
-                            onClick={() => {
-                                setRetryCount(0);
-                                fetchContacts();
-                            }}
-                        >
-                            Retry
-                        </ActionButton>
-                    ) : (
-                        <ActionButton
-                            variant="primary"
-                            onClick={handleLoadMore}
-                            isLoading={loading || (!!error && retryCount < 3)}
-                        >
-                            Load More
-                        </ActionButton>
-                    )}
-                </div>
-            )}
-        </Layout>
+                    </div>
+                ) : (
+                    <div className={styles.list} role="list">
+                        {sortedData.map((personInfo) => (
+                            <PersonInfo
+                                key={personInfo.id}
+                                data={personInfo}
+                                isSelected={selected.has(personInfo.id)}
+                                onToggle={handleToggle}
+                            />
+                        ))}
+                    </div>
+                )}
+                {data.length > 0 && hasNextPage && (
+                    <div className={styles.buttonContainer}>
+                        {error && retryCount >= 3 ? (
+                            <ActionButton
+                                variant="error"
+                                onClick={() => {
+                                    setRetryCount(0);
+                                    fetchContacts();
+                                }}
+                            >
+                                Retry
+                            </ActionButton>
+                        ) : (
+                            <ActionButton
+                                variant="primary"
+                                onClick={handleLoadMore}
+                                isLoading={loading || (!!error && retryCount < 3)}
+                            >
+                                Load More
+                            </ActionButton>
+                        )}
+                    </div>
+                )}
+            </main>
+        </>
     );
 }
 
