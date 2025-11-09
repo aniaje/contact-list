@@ -76,7 +76,7 @@ function ContactList() {
     return (
         <Layout header={`Selected contacts: ${selected.size}`}>
             {loading && data.length === 0 ? (
-                <div style={{ display: 'flex', justifyContent: 'center', padding: '60px' }}>
+                <div className={styles.loadingContainer}>
                     <Oval
                         height={80}
                         width={80}
@@ -99,7 +99,7 @@ function ContactList() {
                 </div>
             )}
             {data.length > 0 && hasNextPage && (
-                <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
+                <div className={styles.buttonContainer}>
                     {error && retryCount >= 3 ? (
                         <ActionButton
                             variant="error"

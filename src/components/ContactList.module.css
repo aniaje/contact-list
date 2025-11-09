@@ -17,3 +17,15 @@
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    padding: 60px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
