@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Layout from './Layout';
 import PersonInfo from './PersonInfo';
 import { ActionButton } from './ActionButton';
+import { Oval } from './Oval';
 import apiData from '../api';
 import { toggleSelection } from '../utils/selection';
+import { scrollToBottom } from '../utils/scroll';
 import { Contact } from '../types';
 import styles from './ContactList.module.css';
 
@@ -14,6 +16,7 @@ function ContactList() {
     const [selected, setSelected] = useState<Set<string>>(new Set());
     const [retryCount, setRetryCount] = useState(0);
     const [hasNextPage, setHasNextPage] = useState(true);
+    const shouldScrollRef = useRef(false);
 
     const fetchContacts = useCallback(async () => {
         setLoading(true);
@@ -24,8 +27,15 @@ function ContactList() {
             setData(prev => [...prev, ...contacts]);
             setHasNextPage(hasNextPage);
             setRetryCount(0);
+
+            if (shouldScrollRef.current) {
+                scrollToBottom();
+                shouldScrollRef.current = false;
+            }
+            return true;
         } catch (err) {
             setError(err as Error);
+            return false;
         } finally {
             setLoading(false);
         }
@@ -33,7 +43,9 @@ function ContactList() {
 
     useEffect(() => {
         fetchContacts();
-    }, [fetchContacts]);
+        // Only run on mount
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (error && retryCount < 3) {
@@ -50,6 +62,11 @@ function ContactList() {
         setSelected(prev => toggleSelection(prev, id));
     }, []);
 
+    const handleLoadMore = useCallback(() => {
+        shouldScrollRef.current = true;
+        fetchContacts();
+    }, [fetchContacts]);
+
     const sortedData = useMemo(() => {
         const selectedContacts = data.filter(contact => selected.has(contact.id));
         const unselectedContacts = data.filter(contact => !selected.has(contact.id));
@@ -58,19 +75,31 @@ function ContactList() {
 
     return (
         <Layout header={`Selected contacts: ${selected.size}`}>
-            <div className={styles.list}>
-                {sortedData.map(personInfo => (
-                    <PersonInfo
-                        key={personInfo.id}
-                        data={personInfo}
-                        isSelected={selected.has(personInfo.id)}
-                        onToggle={handleToggle}
+            {loading && data.length === 0 ? (
+                <div style={{ display: 'flex', justifyContent: 'center', padding: '60px' }}>
+                    <Oval
+                        height={80}
+                        width={80}
+                        color="#007bff"
+                        secondaryColor="#ccc"
+                        strokeWidth={4}
+                        strokeWidthSecondary={4}
                     />
-                ))}
-            </div>
-
-            {hasNextPage && (
-                <>
+                </div>
+            ) : (
+                <div className={styles.list}>
+                    {sortedData.map(personInfo => (
+                        <PersonInfo
+                            key={personInfo.id}
+                            data={personInfo}
+                            isSelected={selected.has(personInfo.id)}
+                            onToggle={handleToggle}
+                        />
+                    ))}
+                </div>
+            )}
+            {data.length > 0 && hasNextPage && (
+                <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
                     {error && retryCount >= 3 ? (
                         <ActionButton
                             variant="error"
@@ -84,13 +113,13 @@ function ContactList() {
                     ) : (
                         <ActionButton
                             variant="primary"
-                            onClick={fetchContacts}
+                            onClick={handleLoadMore}
                             isLoading={loading || (!!error && retryCount < 3)}
                         >
                             Load More
                         </ActionButton>
                     )}
-                </>
+                </div>
             )}
         </Layout>
     );
