@@ -1,8 +1,8 @@
 :root {
-    /* Force light mode - comment out to follow user preferences */
-    color-scheme: light;
-    /* Uncomment below to follow user preferences */
-    /* color-scheme: light dark; */
+    /* Force light mode - uncomment out to follow user preferences */
+    /* color-scheme: light; */
+    /* Comment below to follow user preferences */
+    color-scheme: light dark;
 
     --color-primary: light-dark(#ff8c00, #ff9f33);
     --color-error: light-dark(#dc2626, #ef4444);
