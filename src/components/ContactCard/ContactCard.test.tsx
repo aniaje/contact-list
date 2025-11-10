@@ -17,7 +17,7 @@ describe('ContactCard', () => {
 
     it('displays initials from first and last name', () => {
         render(<ContactCard data={mockContact} isSelected={false} onToggle={jest.fn()} />);
-        expect(screen.getByText('RG')).toBeInTheDocument(); // Ron Giles → RG
+        expect(screen.getByText('RG')).toBeInTheDocument();
     });
 
     it('displays only first letter when name has one word', () => {

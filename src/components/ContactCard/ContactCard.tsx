@@ -1,21 +1,14 @@
 import type { Contact } from '../../types';
+import Avatar from './Avatar';
 import styles from './ContactCard.module.css';
 
-type contactCardProps = {
+interface ContactCardProps {
     data: Contact;
     isSelected: boolean;
     onToggle: (id: string) => void;
-};
+}
 
-function ContactCard({ data, isSelected, onToggle }: contactCardProps) {
-    const getInitials = (name: string) => {
-        const parts = name.trim().split(/\s+/);
-        if (parts.length >= 2) {
-            return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
-        }
-        return parts[0][0]?.toUpperCase() || '';
-    };
-
+function ContactCard({ data, isSelected, onToggle }: ContactCardProps) {
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
@@ -36,9 +29,7 @@ function ContactCard({ data, isSelected, onToggle }: contactCardProps) {
             }. Press to ${isSelected ? 'deselect' : 'select'}.`}
         >
             <div className={styles.header}>
-                <div className={styles.avatar} aria-hidden="true">
-                    {getInitials(data.firstNameLastName)}
-                </div>
+                <Avatar name={data.firstNameLastName} />
                 <div className={styles.info}>
                     <div className={styles.name}>{data.firstNameLastName}</div>
                     <div className={styles.jobTitle}>{data.jobTitle}</div>
