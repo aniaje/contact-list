@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { ContactCard, ActionButton, Loader, ThemeToggle } from '../../components';
+import { ContactCard, ActionButton, Loader } from '../../components';
 import { useContactsData } from '../../hooks/useContactsData';
 import { Contact } from '../../types';
 import styles from './ContactsList.module.css';
@@ -59,7 +59,6 @@ function ContactsList() {
                 <span aria-live="polite" aria-atomic="true">
                     Selected contacts: {selected.size}
                 </span>
-                <ThemeToggle />
             </header>
             <main className={styles.main}>
                 {isInitialLoading ? (
