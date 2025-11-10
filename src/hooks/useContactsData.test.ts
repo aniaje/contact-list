@@ -86,12 +86,10 @@ describe('useContactsData', () => {
 
     it('should refetch contacts', async () => {
         const error = new Error('API Error');
-        mockApiData
-            .mockRejectedValueOnce(error)
-            .mockResolvedValueOnce({
-                contacts: mockContacts,
-                hasNextPage: true,
-            });
+        mockApiData.mockRejectedValueOnce(error).mockResolvedValueOnce({
+            contacts: mockContacts,
+            hasNextPage: true,
+        });
 
         const { result } = renderHook(() => useContactsData({ retry: 0 }));
 
