@@ -18,7 +18,7 @@ This app follows **WCAG 2.2 Level AA** standards.
 - Contact cards announce name, job, and selection state
 - Live regions announce selection count changes
 - Loading and error states are announced
-- Decorative icons hidden with `aria-hidden="true"`
+- Decorative icons and avatars hidden with `aria-hidden="true"`
 
 ### Implementation
 
