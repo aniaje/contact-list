@@ -1,6 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { ContactCard, ActionButton } from '../../components';
-import { Oval } from '../../icons';
+import { ContactCard, ActionButton, Loader } from '../../components';
 import { useContactsData } from '../../hooks/useContactsData';
 import { Contact } from '../../types';
 import styles from './ContactsList.module.css';
@@ -19,6 +18,7 @@ function ContactsList() {
     const dataIsLoading: boolean = loading || errorRetryLimitNotExceeded;
     const isInitialLoading: boolean = dataIsLoading && data.length === 0;
     const shouldShowLoadMoreBtn: boolean = data.length > 0 && hasNextPage;
+    const isEmpty: boolean = data.length === 0;
 
     const sortedData = useMemo(() => {
         const selectedContacts = selectionOrder
@@ -62,21 +62,10 @@ function ContactsList() {
             </header>
             <main className={styles.main}>
                 {isInitialLoading ? (
-                    <div
-                        className={styles.loadingContainer}
-                        role="status"
-                        aria-live="polite"
-                        aria-label="Loading contacts"
-                    >
-                        <Oval
-                            height={80}
-                            width={80}
-                            color="var(--color-primary)"
-                            secondaryColor="var(--color-text-light)"
-                            strokeWidth={4}
-                            strokeWidthSecondary={4}
-                        />
-                        <span className="sr-only">Loading contacts...</span>
+                    <Loader />
+                ) : isEmpty ? (
+                    <div role="alert" aria-live="assertive" className={styles.noData}>
+                        No contacts available.
                     </div>
                 ) : (
                     <>

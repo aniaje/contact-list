@@ -34,43 +34,41 @@ export const Oval = ({
     strokeWidth?: number;
     strokeWidthSecondary?: number;
 }) => (
-    <svg aria-busy={true} role="progressbar">
-        <svg
-            width={width}
-            height={height}
-            viewBox={getViewBoxSize(
-                Number(strokeWidth),
-                Number(strokeWidthSecondary || strokeWidth),
-                RADIUS,
-            )}
-            xmlns="http://www.w3.org/2000/svg"
-            stroke={color}
-        >
-            <g fill="none" fillRule="evenodd">
-                <g
-                    transform="translate(1 1)"
-                    strokeWidth={Number(strokeWidthSecondary || strokeWidth)}
-                >
-                    <circle
-                        strokeOpacity=".5"
-                        cx="0"
-                        cy="0"
-                        r={RADIUS}
-                        stroke={secondaryColor}
-                        strokeWidth={strokeWidth}
+    <svg
+        aria-busy="true"
+        role="progressbar"
+        width={width}
+        height={height}
+        viewBox={getViewBoxSize(
+            Number(strokeWidth),
+            Number(strokeWidthSecondary || strokeWidth),
+            RADIUS,
+        )}
+        xmlns="http://www.w3.org/2000/svg"
+        stroke={color}
+        style={{ display: 'block' }}
+    >
+        <g fill="none" fillRule="evenodd">
+            <g transform="translate(1 1)" strokeWidth={Number(strokeWidthSecondary || strokeWidth)}>
+                <circle
+                    strokeOpacity=".5"
+                    cx="0"
+                    cy="0"
+                    r={RADIUS}
+                    stroke={secondaryColor}
+                    strokeWidth={strokeWidth}
+                />
+                <path d={getPath(RADIUS)}>
+                    <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        from="0 0 0"
+                        to="360 0 0"
+                        dur="1s"
+                        repeatCount="indefinite"
                     />
-                    <path d={getPath(RADIUS)}>
-                        <animateTransform
-                            attributeName="transform"
-                            type="rotate"
-                            from="0 0 0"
-                            to="360 0 0"
-                            dur="1s"
-                            repeatCount="indefinite"
-                        />
-                    </path>
-                </g>
+                </path>
             </g>
-        </svg>
+        </g>
     </svg>
 );
