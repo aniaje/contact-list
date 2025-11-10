@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
-import ContactCard from '../../components/ContactCard/ContactCard';
-import { ActionButton } from '../../components/ActionButton/ActionButton';
-import { Oval } from '../../icons/Oval';
+import { ContactCard, ActionButton } from '../../components';
+import { Oval } from '../../icons';
 import { useContactsData } from '../../hooks/useContactsData';
 import { Contact } from '../../types';
 import styles from './ContactsList.module.css';

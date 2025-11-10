@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import { Oval } from '../../icons/Oval';
+import { Oval } from '../../icons';
 import styles from './ActionButton.module.css';
 
 type ButtonVariant = 'primary' | 'error';

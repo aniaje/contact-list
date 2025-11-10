@@ -1,4 +1,4 @@
-import { Oval } from '../../icons/Oval';
+import { Oval } from '../../icons';
 import styles from './Loader.module.css';
 
 const Loader = () => (
