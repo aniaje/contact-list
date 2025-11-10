@@ -2,6 +2,7 @@ import { renderHook, act } from '@testing-library/react';
 import { useContactsData } from './useContactsData';
 import apiData from '../api';
 import mockData from '../mockData.json';
+import { Contact } from 'src/types';
 
 jest.mock('../api');
 jest.mock('../utils', () => ({
@@ -10,7 +11,7 @@ jest.mock('../utils', () => ({
 
 const mockApiData = apiData as jest.MockedFunction<typeof apiData>;
 
-const mockContacts = mockData.slice(0, 2);
+const mockContacts: Contact[] = mockData.slice(0, 2);
 
 describe('useContactsData', () => {
     beforeEach(() => {

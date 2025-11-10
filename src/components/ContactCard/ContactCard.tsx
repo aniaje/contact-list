@@ -9,11 +9,11 @@ type contactCardProps = {
 
 function ContactCard({ data, isSelected, onToggle }: contactCardProps) {
     const getInitials = (name: string) => {
-        const parts = name.split(' ');
+        const parts = name.trim().split(/\s+/);
         if (parts.length >= 2) {
             return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
         }
-        return name.substring(0, 2).toUpperCase();
+        return parts[0][0]?.toUpperCase() || '';
     };
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -31,7 +31,9 @@ function ContactCard({ data, isSelected, onToggle }: contactCardProps) {
             role="button"
             tabIndex={0}
             aria-pressed={isSelected}
-            aria-label={`${data.firstNameLastName}, ${data.jobTitle}. ${isSelected ? 'Selected' : 'Not selected'}. Press to ${isSelected ? 'deselect' : 'select'}.`}
+            aria-label={`${data.firstNameLastName}, ${data.jobTitle}. ${
+                isSelected ? 'Selected' : 'Not selected'
+            }. Press to ${isSelected ? 'deselect' : 'select'}.`}
         >
             <div className={styles.header}>
                 <div className={styles.avatar} aria-hidden="true">
@@ -42,10 +44,11 @@ function ContactCard({ data, isSelected, onToggle }: contactCardProps) {
                     <div className={styles.jobTitle}>{data.jobTitle}</div>
                 </div>
             </div>
+
             <div className={styles.email}>
                 <a
                     className={styles.emailLink}
-                    href={`mailto:${encodeURIComponent(data.emailAddress)}`}
+                    href={`mailto:${data.emailAddress}`}
                     aria-label={`Send email to ${data.firstNameLastName}`}
                     onClick={e => e.stopPropagation()}
                     onMouseDown={e => e.stopPropagation()}
