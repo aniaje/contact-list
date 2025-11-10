@@ -16,7 +16,7 @@ export default async function apiData() {
     const start = cursor * size;
     const end = cursor * size + size;
     const contacts = mockData.slice(start, end);
-    const hasNextPage = end < mockData.length;
+    const hasNextBatch = end < mockData.length;
 
-    return { contacts, hasNextPage };
+    return { contacts, hasNextBatch };
 }

@@ -5,7 +5,7 @@ import { Contact } from '../../types';
 import styles from './ContactsList.module.css';
 
 function ContactsList() {
-    const { data, loading, error, hasNextPage, retryCount, fetchMore, refetch } = useContactsData({
+    const { data, loading, error, hasNextBatch, retryCount, fetchMore, refetch } = useContactsData({
         retry: 3,
         retryDelay: 2000,
     });
@@ -17,7 +17,7 @@ function ContactsList() {
     const isRetryMode: boolean = Boolean(error) && retryCount >= 3;
     const dataIsLoading: boolean = loading || errorRetryLimitNotExceeded;
     const isInitialLoading: boolean = dataIsLoading && data.length === 0;
-    const shouldShowLoadMoreBtn: boolean = data.length > 0 && hasNextPage;
+    const shouldShowLoadMoreBtn: boolean = data.length > 0 && hasNextBatch;
     const isEmpty: boolean = data.length === 0;
 
     const sortedData = useMemo(() => {

@@ -21,7 +21,7 @@ describe('useContactsData', () => {
     it('should fetch contacts on mount', async () => {
         mockApiData.mockResolvedValueOnce({
             contacts: mockContacts,
-            hasNextPage: true,
+            hasNextBatch: true,
         });
 
         const { result } = renderHook(() => useContactsData());
@@ -34,7 +34,7 @@ describe('useContactsData', () => {
         });
 
         expect(result.current.data).toEqual(mockContacts);
-        expect(result.current.hasNextPage).toBe(true);
+        expect(result.current.hasNextBatch).toBe(true);
         expect(result.current.error).toBeNull();
         expect(result.current.loading).toBe(false);
     });
@@ -60,11 +60,11 @@ describe('useContactsData', () => {
         mockApiData
             .mockResolvedValueOnce({
                 contacts: mockContacts,
-                hasNextPage: true,
+                hasNextBatch: true,
             })
             .mockResolvedValueOnce({
                 contacts: secondBatch,
-                hasNextPage: false,
+                hasNextBatch: false,
             });
 
         const { result } = renderHook(() => useContactsData());
@@ -81,14 +81,14 @@ describe('useContactsData', () => {
         });
 
         expect(result.current.data).toHaveLength(4);
-        expect(result.current.hasNextPage).toBe(false);
+        expect(result.current.hasNextBatch).toBe(false);
     });
 
     it('should refetch contacts', async () => {
         const error = new Error('API Error');
         mockApiData.mockRejectedValueOnce(error).mockResolvedValueOnce({
             contacts: mockContacts,
-            hasNextPage: true,
+            hasNextBatch: true,
         });
 
         const { result } = renderHook(() => useContactsData({ retry: 0 }));
