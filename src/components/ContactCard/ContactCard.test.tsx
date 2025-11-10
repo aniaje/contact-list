@@ -10,7 +10,7 @@ describe('ContactCard', () => {
     it('renders contact information', () => {
         render(<ContactCard data={mockContact} isSelected={false} onToggle={jest.fn()} />);
 
-        expect(screen.getByText(mockContact.name)).toBeInTheDocument();
+        expect(screen.getByText(mockContact.firstNameLastName)).toBeInTheDocument();
         expect(screen.getByText(mockContact.jobTitle)).toBeInTheDocument();
         expect(screen.getByText(mockContact.emailAddress)).toBeInTheDocument();
     });
@@ -21,13 +21,13 @@ describe('ContactCard', () => {
     });
 
     it('displays only first letter when name has one word', () => {
-        const contact: Contact = { ...mockContact, name: 'Madonna' };
+        const contact: Contact = { ...mockContact, firstNameLastName: 'Madonna' };
         render(<ContactCard data={contact} isSelected={false} onToggle={jest.fn()} />);
         expect(screen.getByText('M')).toBeInTheDocument();
     });
 
     it('displays first and last initials for names with middle names', () => {
-        const contact: Contact = { ...mockContact, name: 'John Middle Doe' };
+        const contact: Contact = { ...mockContact, firstNameLastName: 'John Middle Doe' };
         render(<ContactCard data={contact} isSelected={false} onToggle={jest.fn()} />);
         expect(screen.getByText('JD')).toBeInTheDocument();
     });
@@ -51,7 +51,7 @@ describe('ContactCard', () => {
         const user = userEvent.setup();
         render(<ContactCard data={mockContact} isSelected={false} onToggle={handleToggle} />);
 
-        await user.click(screen.getByText(mockContact.name));
+        await user.click(screen.getByText(mockContact.firstNameLastName));
 
         expect(handleToggle).toHaveBeenCalledTimes(1);
         expect(handleToggle).toHaveBeenCalledWith(mockContact.id);
@@ -63,7 +63,7 @@ describe('ContactCard', () => {
         render(<ContactCard data={mockContact} isSelected={false} onToggle={handleToggle} />);
 
         const emailLink = screen.getByRole('link', {
-            name: new RegExp(`send email to ${mockContact.name}`, 'i'),
+            name: new RegExp(`send email to ${mockContact.firstNameLastName}`, 'i'),
         });
 
         expect(emailLink).toHaveAttribute('href', `mailto:${mockContact.emailAddress}`);
