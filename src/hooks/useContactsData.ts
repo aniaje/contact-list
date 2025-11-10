@@ -8,7 +8,7 @@ interface UseContactsDataOptions {
     retryDelay?: number;
 }
 
-interface UseContactsDataReturn {
+interface UseContactsDataFetch {
     data: Contact[];
     loading: boolean;
     error: Error | null;
@@ -18,13 +18,13 @@ interface UseContactsDataReturn {
     refetch: () => void;
 }
 
-export const useContactsData = (options: UseContactsDataOptions = {}): UseContactsDataReturn => {
+export const useContactsData = (options: UseContactsDataOptions = {}): UseContactsDataFetch => {
     const { retry = 3, retryDelay = 2000 } = options;
 
     const [data, setData] = useState<Contact[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
-    const [hasNextBatch, setHasNextPage] = useState<boolean>(true);
+    const [hasNextBatch, setHasNextBatch] = useState<boolean>(true);
     const [retryCount, setRetryCount] = useState<number>(0);
     const shouldScrollRef = useRef<boolean>(false);
 
@@ -35,7 +35,7 @@ export const useContactsData = (options: UseContactsDataOptions = {}): UseContac
         try {
             const { contacts, hasNextBatch } = await apiData();
             setData(prev => [...prev, ...contacts]);
-            setHasNextPage(hasNextBatch);
+            setHasNextBatch(hasNextBatch);
             setRetryCount(0);
 
             if (shouldScrollRef.current) {
