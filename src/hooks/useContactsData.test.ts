@@ -10,7 +10,6 @@ jest.mock('../utils', () => ({
 
 const mockApiData = apiData as jest.MockedFunction<typeof apiData>;
 
-// Używamy pierwszych dwóch kontaktów z mockData
 const mockContacts = mockData.slice(0, 2);
 
 describe('useContactsData', () => {
@@ -28,7 +27,6 @@ describe('useContactsData', () => {
 
         expect(result.current.loading).toBe(true);
 
-        // Czekamy na zakończenie zapytania
         await act(async () => {
             await new Promise(resolve => setTimeout(resolve, 0));
         });
