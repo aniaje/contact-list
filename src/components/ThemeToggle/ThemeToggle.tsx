@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { getInitialTheme, saveTheme, toggleTheme, Theme } from '../../utils/theme';
 import styles from './ThemeToggle.module.css';
 
-export function ThemeToggle() {
+function ThemeToggle() {
     const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
     const handleToggle = () => {

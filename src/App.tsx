@@ -2,7 +2,7 @@ import ContactsList from './views/ContactsList/ContactsList';
 import { ThemeToggle } from './components';
 import './App.css';
 
-function HomePage() {
+function App() {
     return (
         <div className="container">
             <header className="appHeader">
@@ -13,4 +13,4 @@ function HomePage() {
     );
 }
 
-export default HomePage;
+export default App;

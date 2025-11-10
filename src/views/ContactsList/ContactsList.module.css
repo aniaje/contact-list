@@ -29,16 +29,14 @@
     }
 }
 
-.loadingContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 60px;
-}
-
 .buttonContainer {
     display: flex;
     justify-content: center;
     padding: 20px;
+}
+
+.noData {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--color-text-light);
 }
