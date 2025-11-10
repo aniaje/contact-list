@@ -69,7 +69,7 @@ export const useContactsData = (options: UseContactsDataOptions = {}): UseContac
 
     useEffect(() => {
         if (errorRetryLimitNotExceeded) {
-            return retryDataLoad();
+            retryDataLoad();
         }
     }, [errorRetryLimitNotExceeded, retryDataLoad]);
 
