@@ -24,14 +24,14 @@ function ContactCard({ data, isSelected, onToggle }: ContactCardProps) {
             role="button"
             tabIndex={0}
             aria-pressed={isSelected}
-            aria-label={`${data.firstNameLastName}, ${data.jobTitle}. ${
+            aria-label={`${data.name}, ${data.jobTitle}. ${
                 isSelected ? 'Selected' : 'Not selected'
             }. Press to ${isSelected ? 'deselect' : 'select'}.`}
         >
             <div className={styles.header}>
-                <Avatar name={data.firstNameLastName} />
+                <Avatar name={data.name} />
                 <div className={styles.info}>
-                    <div className={styles.name}>{data.firstNameLastName}</div>
+                    <div className={styles.name}>{data.name}</div>
                     <div className={styles.jobTitle}>{data.jobTitle}</div>
                 </div>
             </div>
@@ -40,7 +40,7 @@ function ContactCard({ data, isSelected, onToggle }: ContactCardProps) {
                 <a
                     className={styles.emailLink}
                     href={`mailto:${data.emailAddress}`}
-                    aria-label={`Send email to ${data.firstNameLastName}`}
+                    aria-label={`Send email to ${data.name}`}
                     onClick={e => e.stopPropagation()}
                     onMouseDown={e => e.stopPropagation()}
                     onKeyDown={e => {
