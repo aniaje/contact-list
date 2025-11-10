@@ -1,9 +1,4 @@
 :root {
-    /* Force light mode - uncomment out to follow user preferences */
-    /* color-scheme: light; */
-    /* Comment below to follow user preferences */
-    color-scheme: light dark;
-
     --color-primary: light-dark(#ff8c00, #ff9f33);
     --color-primary-400: light-dark(#f8af56, #f8c556);
     --color-error: light-dark(#dc2626, #ef4444);
@@ -12,13 +7,11 @@
     --color-shadow: light-dark(rgba(0 0 0 / 0.08), rgba(0 0 0 / 0.3));
 }
 
-/* if user picks a light theme in browser */
-html[data-theme='light'] {
+:root:has(#theme [value='light']:checked) {
     color-scheme: light;
 }
 
-/* if user picks a dark theme in browser */
-html[data-theme='dark'] {
+:root:has(#theme [value='dark']:checked) {
     color-scheme: dark;
 }
 
