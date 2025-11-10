@@ -2,7 +2,7 @@
 
 ## Overview
 
-This app follows **WCAG 2.1 Level AA** standards.
+This app follows **WCAG 2.2 Level AA** standards.
 
 ## Key Features
 
@@ -55,5 +55,5 @@ This app follows **WCAG 2.1 Level AA** standards.
 
 ## Resources
 
-- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
+- [WCAG 2.2 Guidelines](https://www.w3.org/WAI/WCAG22/quickref/)
 - [React Accessibility](https://react.dev/learn/accessibility)
