@@ -70,3 +70,23 @@
     word-break: break-word;
     text-align: center;
 }
+
+.emailLink {
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition:
+        color 0.15s ease,
+        text-decoration-color 0.15s ease;
+    cursor: pointer;
+}
+
+.emailLink:hover,
+.emailLink:focus-visible {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.emailLink:active {
+    opacity: 0.85;
+}

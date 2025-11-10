@@ -42,7 +42,26 @@ function ContactCard({ data, isSelected, onToggle }: contactCardProps) {
                     <div className={styles.jobTitle}>{data.jobTitle}</div>
                 </div>
             </div>
-            <div className={styles.email}>{data.emailAddress}</div>
+            <div className={styles.email}>
+                <a
+                    className={styles.emailLink}
+                    href={`mailto:${encodeURIComponent(data.emailAddress)}`}
+                    aria-label={`Send email to ${data.firstNameLastName}`}
+                    onClick={e => e.stopPropagation()}
+                    onMouseDown={e => e.stopPropagation()}
+                    onKeyDown={e => {
+                        if (e.key === ' ') {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            (e.currentTarget as HTMLAnchorElement).click();
+                        } else {
+                            e.stopPropagation();
+                        }
+                    }}
+                >
+                    {data.emailAddress}
+                </a>
+            </div>
         </div>
     );
 }
