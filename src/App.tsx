@@ -1,10 +1,10 @@
-import ContactList from './components/ContactList';
+import ContactsList from './views/ContactsList/ContactsList';
 import './App.css';
 
 function HomePage() {
     return (
         <div className="container">
-            <ContactList />
+            <ContactsList />
         </div>
     );
 }

@@ -14,8 +14,3 @@
 .container {
     position: relative;
 }
-
-.spinner {
-    position: absolute;
-    left: 75px;
-}

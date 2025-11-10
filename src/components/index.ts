@@ -1,5 +1,5 @@
-export { default as ContactList } from './ContactList';
-export { default as PersonInfo } from './PersonInfo';
-export { ActionButton } from './ActionButton';
-export { default as Loader } from './Loader';
-export { Oval } from './Oval';
+export { default as ContactsList } from '../views/ContactsList/ContactsList';
+export { default as ContactCard } from './ContactCard/ContactCard';
+export { ActionButton } from './ActionButton/ActionButton';
+export { default as Loader } from './Loader/Loader';
+export { Oval } from '../icons/Oval';

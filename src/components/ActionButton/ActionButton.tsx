@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import { Oval } from './Oval';
+import { Oval } from '../../icons/Oval';
 import styles from './ActionButton.module.css';
 
 type ButtonVariant = 'primary' | 'error';
@@ -27,7 +27,7 @@ export const ActionButton = ({
     const buttonClass = `${styles.button} ${variantStyles[variant]} ${className}`.trim();
 
     return (
-        <button {...props} className={buttonClass} disabled={isLoading}>
+        <button {...props} className={buttonClass} disabled={isLoading} aria-busy={isLoading}>
             {isLoading ? (
                 <div className={styles.loadingContainer}>
                     <Oval
@@ -37,6 +37,7 @@ export const ActionButton = ({
                         secondaryColor="#ffffff"
                         strokeWidth={5}
                         strokeWidthSecondary={5}
+                        aria-hidden="true"
                     />
                     <span>{loadingText}</span>
                 </div>
