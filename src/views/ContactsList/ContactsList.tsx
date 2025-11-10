@@ -76,7 +76,7 @@ function ContactsList() {
                             strokeWidth={4}
                             strokeWidthSecondary={4}
                         />
-                        <span className="sr-only">Loading contacts, please wait...</span>
+                        <span className="sr-only">Loading contacts...</span>
                     </div>
                 ) : (
                     <>

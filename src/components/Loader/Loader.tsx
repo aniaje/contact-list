@@ -12,7 +12,7 @@ const Loader = () => (
                 strokeWidth={5}
                 strokeWidthSecondary={5}
             />
-            <span className="sr-only">Loading content, please wait...</span>
+            <span className="sr-only">Loading content...</span>
         </div>
     </div>
 );
