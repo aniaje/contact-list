@@ -14,6 +14,20 @@ function ContactsList() {
     const [selected, setSelected] = useState<Set<string>>(new Set());
     const [selectionOrder, setSelectionOrder] = useState<string[]>([]);
 
+    const errorRetryLimitNotExceeded: boolean = Boolean(error) && retryCount < 3;
+    const isRetryMode: boolean = Boolean(error) && retryCount >= 3;
+    const dataIsLoading: boolean = loading || errorRetryLimitNotExceeded;
+    const isInitialLoading: boolean = dataIsLoading && data.length === 0;
+    const shouldShowLoadMoreBtn: boolean = data.length > 0 && hasNextPage;
+
+    const sortedData = useMemo(() => {
+        const selectedContacts = selectionOrder
+            .map(id => data.find(contact => contact.id === id))
+            .filter((contact): contact is Contact => contact !== undefined);
+        const unselectedContacts = data.filter(contact => !selected.has(contact.id));
+        return [...selectedContacts, ...unselectedContacts];
+    }, [data, selected, selectionOrder]);
+
     const handleToggle = useCallback((id: string) => {
         setSelected(prev => {
             const isSelected = prev.has(id);
@@ -38,20 +52,6 @@ function ContactsList() {
             }
         });
     }, []);
-
-    const sortedData = useMemo(() => {
-        const selectedContacts = selectionOrder
-            .map(id => data.find(contact => contact.id === id))
-            .filter((contact): contact is Contact => contact !== undefined);
-        const unselectedContacts = data.filter(contact => !selected.has(contact.id));
-        return [...selectedContacts, ...unselectedContacts];
-    }, [data, selected, selectionOrder]);
-
-    const errorRetryLimitNotExceeded: boolean = Boolean(error) && retryCount < 3;
-    const isRetryMode: boolean = Boolean(error) && retryCount >= 3;
-    const dataIsLoading: boolean = loading || errorRetryLimitNotExceeded;
-    const isInitialLoading: boolean = dataIsLoading && data.length === 0;
-    const shouldShowLoadMoreBtn: boolean = data.length > 0 && hasNextPage;
 
     return (
         <>
