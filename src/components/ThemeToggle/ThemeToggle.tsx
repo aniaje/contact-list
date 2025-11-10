@@ -1,16 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getInitialTheme, saveTheme, toggleTheme, Theme } from '../../utils/theme';
 import styles from './ThemeToggle.module.css';
 
 export function ThemeToggle() {
     const [theme, setTheme] = useState<Theme>(getInitialTheme);
-
-    useEffect(() => {
-        const select = document.getElementById('theme') as HTMLSelectElement;
-        if (select) {
-            select.value = theme;
-        }
-    }, [theme]);
 
     const handleToggle = () => {
         const newTheme = toggleTheme(theme);
