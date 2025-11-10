@@ -1,4 +1,19 @@
-# TODO
+# Contact List - Anna Jezowska
+
+A React TypeScript application for displaying and managing a paginated contact list. Features include:
+
+- Paginated contact fetching with "Load More" functionality
+- Selectable contact cards with visual feedback
+- Selected contacts automatically moved to the top of the list
+- Optimized rendering performance using useMemo, useCallback and CSS containment
+- Loading and error states with retry capability
+- Dark and light mode support using light-dark()
+- Accessible keyboard navigation and semantic HTML
+- Fully typed with TypeScript
+
+---
+
+# TO BE DONE CONTEXT
 
 Please do not fork the repo, clone it and put it in your own github / save it locally.
 
