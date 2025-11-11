@@ -18,7 +18,7 @@ function ContactsList() {
         }
     }, []);
 
-    const { data, loading, error, hasNextBatch, retryCount, fetchMore, refetch } = useContactsData({
+    const { data, isLoading, error, hasNextBatch, retryCount, fetchMore, refetch } = useContactsData({
         retry: 3,
         retryDelay: 2000,
         onSuccess: handleScrollOnSuccess,
@@ -26,7 +26,7 @@ function ContactsList() {
 
     const errorRetryLimitNotExceeded = Boolean(error && retryCount < 3);
     const isRetryFetchMode = Boolean(error && retryCount >= 3);
-    const dataIsLoading = loading || errorRetryLimitNotExceeded;
+    const dataIsLoading = isLoading || errorRetryLimitNotExceeded;
     const isInitialLoading = dataIsLoading && data.length === 0;
     const shouldShowLoadMoreBtn = data.length > 0 && hasNextBatch;
     const isEmpty = data.length === 0;

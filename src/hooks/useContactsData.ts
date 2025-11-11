@@ -10,7 +10,7 @@ interface UseContactsDataOptions {
 
 interface UseContactsDataFetch {
     data: Contact[];
-    loading: boolean;
+    isLoading: boolean;
     error: Error | null;
     hasNextBatch: boolean;
     retryCount: number;
@@ -22,7 +22,7 @@ export const useContactsData = (options: UseContactsDataOptions = {}): UseContac
     const { retry = 3, retryDelay = 2000, onSuccess } = options;
 
     const [data, setData] = useState<Contact[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
     const [hasNextBatch, setHasNextBatch] = useState<boolean>(true);
     const [retryCount, setRetryCount] = useState<number>(0);
@@ -34,7 +34,7 @@ export const useContactsData = (options: UseContactsDataOptions = {}): UseContac
     };
 
     const fetchContacts = useCallback(async () => {
-        setLoading(true);
+        setIsLoading(true);
         setError(null);
 
         try {
@@ -44,7 +44,7 @@ export const useContactsData = (options: UseContactsDataOptions = {}): UseContac
         } catch (error) {
             setError(error as Error);
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     }, [onSuccess]);
 
@@ -77,7 +77,7 @@ export const useContactsData = (options: UseContactsDataOptions = {}): UseContac
 
     return {
         data,
-        loading,
+        isLoading,
         error,
         hasNextBatch,
         retryCount,
