@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 export type Theme = 'light' | 'dark';
 
@@ -21,17 +21,16 @@ interface AppThemeProviderProps {
 }
 
 export function AppThemeProvider({ children }: AppThemeProviderProps) {
-    const [theme, setTheme] = useState<Theme>(() => {
-        const initialTheme = getInitialTheme();
-        document.documentElement.setAttribute('data-theme', initialTheme);
-        return initialTheme;
-    });
+    const [theme, setTheme] = useState<Theme>(getInitialTheme);
+
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+    }, [theme]);
 
     const toggleTheme = () => {
         setTheme(prevTheme => {
             const newTheme = prevTheme === 'light' ? 'dark' : 'light';
             localStorage.setItem(THEME_STORAGE_KEY, newTheme);
-            document.documentElement.setAttribute('data-theme', newTheme);
             return newTheme;
         });
     };
