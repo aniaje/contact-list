@@ -26,7 +26,7 @@ describe('useContactsData', () => {
 
         const { result } = renderHook(() => useContactsData());
 
-        expect(result.current.loading).toBe(true);
+        expect(result.current.isLoading).toBe(true);
 
         await act(async () => {
             await new Promise(resolve => setTimeout(resolve, 0));
@@ -35,7 +35,7 @@ describe('useContactsData', () => {
         expect(result.current.data).toEqual(mockContacts);
         expect(result.current.hasNextBatch).toBe(true);
         expect(result.current.error).toBeNull();
-        expect(result.current.loading).toBe(false);
+        expect(result.current.isLoading).toBe(false);
     });
 
     it('should handle errors', async () => {
@@ -50,7 +50,7 @@ describe('useContactsData', () => {
 
         expect(result.current.error).toEqual(error);
         expect(result.current.data).toEqual([]);
-        expect(result.current.loading).toBe(false);
+        expect(result.current.isLoading).toBe(false);
     });
 
     it('should fetch more contacts', async () => {
