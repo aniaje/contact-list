@@ -13,7 +13,9 @@ const THEME_STORAGE_KEY = 'theme';
 
 function getInitialTheme(): Theme {
     const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
-    return savedTheme || 'light';
+    const initialTheme = savedTheme || 'light';
+    document.documentElement.setAttribute('data-theme', initialTheme);
+    return initialTheme;
 }
 
 interface AppThemeProviderProps {
