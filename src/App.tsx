@@ -5,7 +5,7 @@ import { AppThemeProvider } from './contexts/AppThemeContext';
 
 function App() {
     return (
-       <AppThemeProvider>
+        <AppThemeProvider>
             <div className="container">
                 <header className="appHeader">
                     <ThemeToggle />

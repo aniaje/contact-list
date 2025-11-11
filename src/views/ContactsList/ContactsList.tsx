@@ -18,11 +18,12 @@ function ContactsList() {
         }
     }, []);
 
-    const { data, isLoading, error, hasNextBatch, retryCount, fetchMore, refetch } = useContactsData({
-        retry: 3,
-        retryDelay: 2000,
-        onSuccess: handleScrollOnSuccess,
-    });
+    const { data, isLoading, error, hasNextBatch, retryCount, fetchMore, refetch } =
+        useContactsData({
+            retry: 3,
+            retryDelay: 2000,
+            onSuccess: handleScrollOnSuccess,
+        });
 
     const errorRetryLimitNotExceeded = Boolean(error && retryCount < 3);
     const isRetryFetchMode = Boolean(error && retryCount >= 3);
