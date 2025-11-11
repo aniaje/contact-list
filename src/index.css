@@ -7,11 +7,11 @@
     --color-shadow: light-dark(rgba(0 0 0 / 0.08), rgba(0 0 0 / 0.3));
 }
 
-:root:has(#theme [value='light']:checked) {
+:root[data-theme='light'] {
     color-scheme: light;
 }
 
-:root:has(#theme [value='dark']:checked) {
+:root[data-theme='dark'] {
     color-scheme: dark;
 }
 

@@ -1,24 +1,35 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { ContactCard, ActionButton, Loader } from '../../components';
 import { useContactsData } from '../../hooks/useContactsData';
+import { scrollToBottom } from '../../utils';
 import { Contact } from '../../types';
 import styles from './ContactsList.module.css';
 
 function ContactsList() {
-    const { data, loading, error, hasNextBatch, retryCount, fetchMore, refetch } = useContactsData({
-        retry: 3,
-        retryDelay: 2000,
-    });
-
     const [selected, setSelected] = useState<Set<string>>(new Set());
     const [selectionOrder, setSelectionOrder] = useState<string[]>([]);
 
-    const errorRetryLimitNotExceeded: boolean = Boolean(error) && retryCount < 3;
-    const isRetryMode: boolean = Boolean(error) && retryCount >= 3;
-    const dataIsLoading: boolean = loading || errorRetryLimitNotExceeded;
-    const isInitialLoading: boolean = dataIsLoading && data.length === 0;
-    const shouldShowLoadMoreBtn: boolean = data.length > 0 && hasNextBatch;
-    const isEmpty: boolean = data.length === 0;
+    const shouldScrollRef = useRef<boolean>(false);
+
+    const handleScrollOnSuccess = useCallback(() => {
+        if (shouldScrollRef.current) {
+            scrollToBottom();
+            shouldScrollRef.current = false;
+        }
+    }, []);
+
+    const { data, loading, error, hasNextBatch, retryCount, fetchMore, refetch } = useContactsData({
+        retry: 3,
+        retryDelay: 2000,
+        onSuccess: handleScrollOnSuccess,
+    });
+
+    const errorRetryLimitNotExceeded = Boolean(error && retryCount < 3);
+    const isRetryFetchMode = Boolean(error && retryCount >= 3);
+    const dataIsLoading = loading || errorRetryLimitNotExceeded;
+    const isInitialLoading = dataIsLoading && data.length === 0;
+    const shouldShowLoadMoreBtn = data.length > 0 && hasNextBatch;
+    const isEmpty = data.length === 0;
 
     const sortedData = useMemo(() => {
         const selectedContacts = selectionOrder
@@ -53,6 +64,11 @@ function ContactsList() {
         });
     }, []);
 
+    const handleFetchMore = useCallback(() => {
+        shouldScrollRef.current = true;
+        fetchMore();
+    }, [fetchMore]);
+
     return (
         <>
             <header className={styles.header}>
@@ -79,7 +95,7 @@ function ContactsList() {
                                 />
                             ))}
                         </div>
-                        {error && isRetryMode && (
+                        {error && isRetryFetchMode && (
                             <div role="alert" aria-live="assertive" className="sr-only">
                                 Error loading contacts. Please retry.
                             </div>
@@ -88,7 +104,7 @@ function ContactsList() {
                 )}
                 {shouldShowLoadMoreBtn && (
                     <div className={styles.buttonContainer}>
-                        {isRetryMode ? (
+                        {isRetryFetchMode ? (
                             <ActionButton
                                 variant="error"
                                 onClick={refetch}
@@ -99,7 +115,7 @@ function ContactsList() {
                         ) : (
                             <ActionButton
                                 variant="primary"
-                                onClick={fetchMore}
+                                onClick={handleFetchMore}
                                 isLoading={dataIsLoading}
                                 aria-label="Load more contacts"
                             >

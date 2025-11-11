@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Contact } from '../types';
 import apiData from '../api';
-import { scrollToBottom } from '../utils';
 
 interface UseContactsDataOptions {
     retry?: number;
     retryDelay?: number;
+    onSuccess?: () => void;
 }
 
 interface UseContactsDataFetch {
@@ -19,14 +19,19 @@ interface UseContactsDataFetch {
 }
 
 export const useContactsData = (options: UseContactsDataOptions = {}): UseContactsDataFetch => {
-    const { retry = 3, retryDelay = 2000 } = options;
+    const { retry = 3, retryDelay = 2000, onSuccess } = options;
 
     const [data, setData] = useState<Contact[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
     const [hasNextBatch, setHasNextBatch] = useState<boolean>(true);
     const [retryCount, setRetryCount] = useState<number>(0);
-    const shouldScrollRef = useRef<boolean>(false);
+
+    const updatePageData = (data: Contact[], hasNewBatch: boolean): void => {
+        setData(prev => [...prev, ...data]);
+        setHasNextBatch(hasNewBatch);
+        setRetryCount(0);
+    };
 
     const fetchContacts = useCallback(async () => {
         setLoading(true);
@@ -34,22 +39,14 @@ export const useContactsData = (options: UseContactsDataOptions = {}): UseContac
 
         try {
             const { contacts, hasNextBatch } = await apiData();
-            setData(prev => [...prev, ...contacts]);
-            setHasNextBatch(hasNextBatch);
-            setRetryCount(0);
-
-            if (shouldScrollRef.current) {
-                scrollToBottom();
-                shouldScrollRef.current = false;
-            }
-            return true;
-        } catch (err) {
-            setError(err as Error);
-            return false;
+            updatePageData(contacts, hasNextBatch);
+            onSuccess?.();
+        } catch (error) {
+            setError(error as Error);
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [onSuccess]);
 
     const errorRetryLimitNotExceeded: boolean = Boolean(error) && retryCount < retry;
 
@@ -73,11 +70,6 @@ export const useContactsData = (options: UseContactsDataOptions = {}): UseContac
         }
     }, [errorRetryLimitNotExceeded, retryDataLoad]);
 
-    const fetchMore = useCallback(() => {
-        shouldScrollRef.current = true;
-        fetchContacts();
-    }, [fetchContacts]);
-
     const refetch = useCallback(() => {
         setRetryCount(0);
         fetchContacts();
@@ -89,7 +81,7 @@ export const useContactsData = (options: UseContactsDataOptions = {}): UseContac
         error,
         hasNextBatch,
         retryCount,
-        fetchMore,
+        fetchMore: fetchContacts,
         refetch,
     };
 };
