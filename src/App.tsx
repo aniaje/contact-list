@@ -6,10 +6,12 @@ import { AppThemeProvider } from './contexts/AppThemeContext';
 function App() {
     return (
        <AppThemeProvider>
-            <header className="appHeader">
-                <ThemeToggle />
-            </header>
-            <ContactsList />
+            <div className="container">
+                <header className="appHeader">
+                    <ThemeToggle />
+                </header>
+                <ContactsList />
+            </div>
         </AppThemeProvider>
     );
 }
