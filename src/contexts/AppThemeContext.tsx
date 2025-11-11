@@ -1,10 +1,13 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
-export type Theme = 'light' | 'dark';
+type Theme = 'light' | 'dark';
 
 interface AppThemeContextType {
     theme: Theme;
     toggleTheme: () => void;
+}
+interface AppThemeProviderProps {
+    children: ReactNode;
 }
 
 const AppThemeContext = createContext<AppThemeContextType | undefined>(undefined);
@@ -16,10 +19,6 @@ function getInitialTheme(): Theme {
     const initialTheme = savedTheme || 'light';
     document.documentElement.setAttribute('data-theme', initialTheme);
     return initialTheme;
-}
-
-interface AppThemeProviderProps {
-    children: ReactNode;
 }
 
 export function AppThemeProvider({ children }: AppThemeProviderProps) {
