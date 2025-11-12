@@ -1,0 +1,11 @@
+{
+    "extends": ["react-app", "react-app/jest"],
+    "rules": {
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["error", { "ignoreRestSiblings": true }],
+        "@typescript-eslint/no-explicit-any": "error",
+        "prefer-const": "error",
+        "no-var": "error",
+        "testing-library/no-node-access": "off"
+    }
+}

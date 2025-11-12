@@ -1,0 +1,15 @@
+{
+    "short_name": "Contacts",
+    "name": "Contact List",
+    "icons": [
+        {
+            "src": "favicon.svg",
+            "type": "image/svg+xml",
+            "sizes": "any"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#ff8c00",
+    "background_color": "#ffffff"
+}

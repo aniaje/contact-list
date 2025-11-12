@@ -1,0 +1,11 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.25rem;
+    padding-bottom: 5rem;
+}
+
+.appHeader {
+    display: flex;
+    justify-content: flex-end;
+}

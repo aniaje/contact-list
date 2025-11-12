@@ -1,0 +1,30 @@
+.toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--color-text-light);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.toggle:hover {
+    border-color: var(--color-primary);
+    transform: scale(1.05);
+}
+
+.toggle:active {
+    transform: scale(0.95);
+}
+
+.icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

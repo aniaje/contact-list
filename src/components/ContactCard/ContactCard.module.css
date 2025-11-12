@@ -1,0 +1,100 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+    background: light-dark(#ffffff, #2d2d2d);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px var(--color-shadow);
+    cursor: pointer;
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+    transition:
+        outline-color 120ms ease,
+        box-shadow 120ms ease,
+        background-color 120ms ease;
+    position: relative;
+}
+
+.card:hover {
+    outline-color: var(--color-primary);
+}
+
+.card.selected {
+    outline-color: var(--color-primary);
+}
+
+.card.selected:hover {
+    outline-color: var(--color-primary);
+}
+
+.card:not(.selected):hover {
+    outline: 1px solid var(--color-primary);
+}
+
+.card:focus-visible {
+    outline-color: var(--color-primary);
+    outline-offset: 2px;
+}
+
+.card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.85rem;
+    line-height: 1;
+    color: var(--color-primary);
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.info {
+    flex: 1;
+    min-width: 0;
+}
+
+.name {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.jobTitle {
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.03rem;
+}
+
+.email {
+    font-size: 0.81rem;
+    color: var(--color-text-light);
+    word-break: break-word;
+    text-align: center;
+}
+
+.emailLink {
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition:
+        color 0.15s ease,
+        text-decoration-color 0.15s ease;
+    cursor: pointer;
+}
+
+.emailLink:hover,
+.emailLink:focus-visible {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.125rem;
+}
+
+.emailLink:active {
+    opacity: 0.85;
+}

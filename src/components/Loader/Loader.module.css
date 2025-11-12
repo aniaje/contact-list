@@ -1,0 +1,18 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(to bottom, rgba(0 0 0 / 0.4), rgba(0 0 0 / 0.5));
+    background: light-dark(
+        linear-gradient(to bottom, rgba(0 0 0 / 0.5), rgba(0 0 0 / 0.7)),
+        linear-gradient(to bottom, rgba(0 0 0 / 0.7), rgba(0 0 0 / 0.9))
+    );
+}
+
+.container {
+    position: relative;
+}
